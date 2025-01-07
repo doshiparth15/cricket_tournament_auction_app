@@ -1,1 +1,1 @@
-# cricket_tournament_auction_app
+# Cricket Auction App
