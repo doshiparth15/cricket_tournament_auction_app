@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Final Team Compositions</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="logo-container">
+        <img src="static/logo.jpg" alt="Website Logo" class="logo">
+    </div>
+    
+
+    
+    
+    <!-- Player Information Section -->
+    <div id="player">
+        <div class="player-card">
+            <div class="player-details">
+                <h2 id="player-name">{{ player.name }}</h2>
+                <h3>Grade: {{ player.grade }}</h3>
+                <p>Base Price: {{ player.base_price }}</p>
+                <p>Final Bid: <span class="final-bid">{{ player.final_bid }}</span></p>
+                <h2>Winning Team: {{ player.winning_team }} {% if player.winning_team %}
+                {% set team_icons = {
+                    'PM Capitals': 'PM Capitals.jpg',
+                    'PM Knight Riders': 'PM Knight Riders.jpg',
+                    'PM Royals': 'PM Royals.jpg',
+                    'PM Super Giants': 'PM Super Giants.jpg',
+                    'PM Super Kings': 'PM Super Kings.jpg',
+                    'PM Titans': 'PM Titans.jpg'
+                } %}
+                <img src="{{ url_for('static', filename='images/' + team_icons[player.winning_team]) }}" 
+                    alt="{{ player.winning_team }} icon" 
+                    class="team-icon">
+                {% endif %}</h2>
+            </div>
+        </div>
+        <style>
+
+            .team-icon {
+                width: 150px;
+                height: 150px;
+                vertical-align: middle;
+                margin-left: 8px;
+                object-fit: contain;
+            }
+        
+            @media (max-width: 768px) {
+                .container {
+                    flex-direction: column;
+                }
+            }
+        </style>
+    </div>
+    <h1>Final Team Compositions</h1>
+    {% for team_name, team_data in teams.items() %}
+    <div class="team-section">
+        <h2>
+            {{ team_name }}
+            {% set team_icons = {
+                'PM Capitals': 'PM Capitals.jpg',
+                'PM Knight Riders': 'PM Knight Riders.jpg',
+                'PM Royals': 'PM Royals.jpg',
+                'PM Super Giants': 'PM Super Giants.jpg',
+                'PM Super Kings': 'PM Super Kings.jpg',
+                'PM Titans': 'PM Titans.jpg'
+            } %}
+            <img src="{{ url_for('static', filename='images/' + team_icons[team_name]) }}" 
+                 alt="{{ team_name }} icon" 
+                 class="team-icon">
+        </h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Player Name</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for player in team_data.players %}
+                <tr>
+                    <td>{{ player.name }}</td>
+                    <td>{{ player.price }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endfor %}
+
+    <script>
+// Auto refresh the view info page every second
+setInterval(function() {
+    window.location.reload();
+}, 5000); // 1000ms = 1 second
+</script>
+</body>
+</html>
