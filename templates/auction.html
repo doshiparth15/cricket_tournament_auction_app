@@ -67,6 +67,7 @@
         <button id="sell-button">Sell Player</button>
         <button id="unsold-btn" onclick="markUnsold()">Unsold</button>
         <button id="cancel-bid-btn" onclick="cancelBid()">Cancel Bid</button>
+        <button id="reset-auction-btn">Reset Auction</button>
     </div>
 
     <!-- Teams Information -->
@@ -228,6 +229,23 @@ setInterval(function() {
             document.getElementById('current-bid').textContent = player.final_bid;
             document.getElementById('winning-team').textContent = player.winning_team || 'None';
         }
+
+        document.getElementById('reset-auction-btn').addEventListener('click', function() {
+            if (confirm('Are you sure you want to reset the entire auction? This action cannot be undone.')) {
+                fetch('/reset_auction', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        window.location.reload();
+                    }
+                });
+            }
+        });
 
 
 
