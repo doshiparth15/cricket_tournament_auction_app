@@ -428,6 +428,24 @@ def manual_bid():
     
     return jsonify(success=True, player=player)
 
+@app.route('/reset_auction', methods=['POST'])
+def reset_auction():
+    global current_player_index, players, unsold_players
+    
+    # Reset all global variables
+    current_player_index = 0
+    players = load_players()
+    unsold_players = []
+    
+    # Reset all teams
+    for team in teams.values():
+        team["budget"] = 10000000
+        team["players"] = []
+        team["grade_count"] = defaultdict(int)
+    
+    return jsonify(success=True)
+
+
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 8000))
     app.run(host='0.0.0.0', port=port)
